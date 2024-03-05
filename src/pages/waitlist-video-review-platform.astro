@@ -1,0 +1,137 @@
+---
+import Layout from '~/layouts/LandingLayout.astro';
+
+import Hero2 from '~/components/widgets/Hero2.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import FormContainer from '~/components/ui/Form.astro';
+import Headline from '~/components/ui/Headline.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+
+const metadata = {
+  title: 'Video review platform waitlist',
+};
+const { id, isDark = false, classes = {}, bg = await Astro.slots.render('bg') } = Astro.props;
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero2 Widget ******************* -->
+
+  <Hero2
+    tagline="Join the Waitlist"
+    title="Join the Waitlist for Exclusive Access to Our Revolutionary Video Review Platform!"
+    subtitle="Are you ready to take your fitness or martial arts training to the next level? Join our waitlist now for exclusive access to our groundbreaking video review platform designed specifically for personal trainers and coaches like you!"
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Join Waitlist Now',
+        href: '#questionnaire',
+        icon: 'tabler:square-rounded-arrow-right',
+      },
+      { text: 'Learn More', href: '#' },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1558803116-c1b4ac867b31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80',
+      alt: 'Fitness training. Join the Waitlist',
+    }}
+  />
+
+  <Features
+    id="reasons"
+    title="Why Join Our Waitlist?"
+    subtitle="Each of the following reasons highlights the benefits of joining our waitlist."
+    columns={2}
+    items={[
+      {
+        title: 'Revolutionize Your Coaching',
+        description:
+          'Get ready to revolutionize your coaching experience with our innovative video review platform. Say goodbye to outdated feedback methods and hello to seamless, effective video feedback that enhances your training sessions like never before.',
+        icon: 'tabler:sparkles',
+      },
+      {
+        title: 'Tailored Feedback',
+        description:
+          "Receive personalized feedback tailored to your specific coaching style and your clients' unique needs. Our platform allows you to provide detailed insights and constructive criticism directly on training videos, helping your clients improve their form and technique with precision.",
+        icon: 'tabler:check',
+      },
+      {
+        title: 'Enhanced Client Engagement',
+        description:
+          'Keep your clients motivated and engaged by offering them access to valuable feedback on their progress. Our platform fosters a sense of accountability and empowerment, driving your clients to push harder and achieve their fitness or martial arts goals faster.',
+        icon: 'tabler:heart',
+      },
+      {
+        title: 'Save Time and Effort',
+        description:
+          'Say goodbye to endless back-and-forth emails and cumbersome feedback processes. Our streamlined platform makes it easy to review videos, provide feedback, and track progress all in one place, saving you valuable time and effort.',
+        icon: 'tabler:clock',
+      },
+    ]}
+  />
+
+  <WidgetWrapper
+    id="questionnaire"
+    isDark={isDark}
+    containerClass={`max-w-7xl mx-auto ${classes?.container ?? ''}`}
+    bg={bg}
+  >
+    <Headline
+      title="Shape the Future of Fitness Coaching: Share Your Insights with Us!"
+      subtitle="Help Us Build the Ultimate Video Review Platform for Coaches and Trainers"
+      tagline="Your Voice Matters! Join Our Waitlist and Be Heard."
+    />
+    <div class="mt-3 text-center">
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        To join our free waitlist and be among the first to access our revolutionary video review platform, please fill
+        out the short questionnaire below. Your input will help us tailor our platform to meet your specific needs and
+        ensure that you get the most out of this game-changing tool.
+      </p>
+    </div>
+    <div
+      class="flex flex-col max-w-xl mx-auto rounded-lg backdrop-blur border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 shadow p-4 sm:p-6 lg:p-8 w-full"
+    >
+      <FormContainer
+        inputs={[
+          {
+            type: 'text',
+            name: 'challenge',
+            label:
+              '1. What are the biggest challenges you face as a fitness trainer/martial arts coach when providing feedback to your clients/students?',
+          },
+          {
+            type: 'text',
+            name: 'feedback',
+            label: '2. How do you currently handle video feedback for your clients/students, if at all?',
+          },
+          {
+            type: 'text',
+            name: 'features',
+            label:
+              '3. What features would you most like to see in a video review platform designed for personal trainers and coaches?',
+          },
+          {
+            type: 'text',
+            name: 'enhancement',
+            label:
+              '4. How do you believe a video review platform could enhance your coaching experience and improve your clients results?',
+          },
+          {
+            type: 'text',
+            name: 'tools',
+            label: '5. What other tools or resources do you currently use to support your coaching efforts?',
+          },
+          {
+            type: 'email',
+            name: 'email',
+            label: 'Your email address',
+          },
+        ]}
+        disclaimer={{
+          label: 'By submitting this form, you acknowledge and agree to the collection of your personal information. ',
+        }}
+        button="Be a Trailblazer: Join the Waitlist Now!"
+        endpoint="/vrp-waitlist-form"
+      />
+    </div>
+  </WidgetWrapper>
+</Layout>

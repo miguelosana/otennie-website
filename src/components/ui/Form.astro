@@ -1,10 +1,12 @@
 ---
 import type { Form } from '~/types';
-import Button from '~/components/ui/Button.astro';
+import Button from '~/components/ui/HtmxButton.astro';
 
-const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } = Astro.props as Form;
+
+
+const { endpoint, inputs, textarea, disclaimer, button = 'Contact us', description = '' } = Astro.props as Form;
 ---
-
+<div id="form-container">
 <form>
   {
     inputs &&
@@ -70,7 +72,9 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
   {
     button && (
       <div class="mt-10 grid">
-        <Button variant="primary" type="submit">{button}</Button>
+        <Button variant="primary" type="submit"  hx-post={endpoint} hx-target="#form-container" hx-swap="innerHTML">
+          {button}
+        </Button>
       </div>
     )
   }
@@ -83,3 +87,4 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
     )
   }
 </form>
+</div>

@@ -1,21 +1,23 @@
-package main
+package storage
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
+	"otennie/models"
 	"time"
 
 	"github.com/google/uuid"
 	bolt "go.etcd.io/bbolt"
 )
 
-type Db struct {
+type BoltStorage struct {
 	db *bolt.DB
 }
 
-func NewDB() *Db {
-	db, err := bolt.Open("ottenie.db", 0660, &bolt.Options{Timeout: 1 * time.Second})
+func NewBoltStorage(dbFile string) *BoltStorage {
+	db, err := bolt.Open(dbFile, 0660, &bolt.Options{Timeout: 1 * time.Second})
 
 	if err != nil {
 		log.Fatal(err)
@@ -35,10 +37,10 @@ func NewDB() *Db {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return &Db{db: db}
+	return &BoltStorage{db: db}
 }
 
-func (d *Db) InsertContact(c ContactForm) error {
+func (d *BoltStorage) InsertContact(ctx context.Context, c models.ContactForm) error {
 
 	encoded, err := json.Marshal(c)
 	if err != nil {
@@ -55,7 +57,7 @@ func (d *Db) InsertContact(c ContactForm) error {
 	return err
 }
 
-func (d *Db) InserVideoWaitlist(v VideoWaitlistForm) error {
+func (d *BoltStorage) InsertVideoWaitlist(ctx context.Context, v models.VideoWaitlistForm) error {
 	encoded, err := json.Marshal(v)
 	if err != nil {
 		return err
@@ -71,6 +73,7 @@ func (d *Db) InserVideoWaitlist(v VideoWaitlistForm) error {
 	return err
 }
 
-func (d *Db) Close() {
-	d.db.Close()
+func (d *BoltStorage) Close() error {
+	return d.db.Close()
+
 }

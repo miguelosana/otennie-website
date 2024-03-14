@@ -7,7 +7,7 @@ import Button from '~/components/ui/HtmxButton.astro';
 const { endpoint, inputs, textarea, disclaimer, button = 'Contact us', description = '' } = Astro.props as Form;
 ---
 <div id="form-container">
-<form>
+<form id="site-form">
   {
     inputs &&
       inputs.map(
@@ -72,7 +72,7 @@ const { endpoint, inputs, textarea, disclaimer, button = 'Contact us', descripti
   {
     button && (
       <div class="mt-10 grid">
-        <Button variant="primary" type="submit"  hx-post={endpoint} hx-target="#form-container" hx-swap="innerHTML">
+        <Button variant="primary" type="submit"  hx-post={endpoint} hx-target="#form-container" hx-swap="innerHTML" class="g-recaptcha" data-sitekey="6LfNF48pAAAAAO3v3o4xvziAswi6buQbkVRObrXO" data-callback="onSubmit" data-action="submit">
           {button}
         </Button>
       </div>
@@ -86,5 +86,9 @@ const { endpoint, inputs, textarea, disclaimer, button = 'Contact us', descripti
       </div>
     )
   }
-</form>
+</form> <script>
+   function onSubmit(token) {
+     document.getElementById("site-form").submit();
+   }
+ </script>
 </div>
